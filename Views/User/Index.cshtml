@@ -1,0 +1,108 @@
+﻿@{
+    ViewData["Title"] = "Profile - EV Charging Platform";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .wallet {
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .investments {
+            list-style: none;
+            padding: 0;
+        }
+
+        .investment-item {
+            background: #e9ecef;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .back-button {
+            display: block;
+            width: 100px;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 20px auto;
+        }
+
+            .back-button:hover {
+                background: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="header">Profile</div>
+    <div class="container">
+        <div class="wallet">Wallet Balance: $<span id="walletBalance">5000</span></div>
+
+        <h3>Your Investments</h3>
+        <ul class="investments" id="investmentsList"></ul>
+
+        <a href="/Home/Index" class="back-button">Back</a>
+    </div>
+
+    <script>
+        // Kullanıcının yatırımlarını gösteren dummy veri
+        const investments = [
+            { station: "Yeşil Enerji İzmir", amount: 1000, date: "2025-02-01" },
+            { station: "Elektrik16", amount: 750, date: "2025-02-05" },
+            { station: "Levent Şarj", amount: 500, date: "2025-02-10" }
+        ];
+
+        function loadInvestments() {
+            const list = document.getElementById("investmentsList");
+            investments.forEach(inv => {
+                let li = document.createElement("li");
+                li.className = "investment-item";
+                li.innerHTML = `<strong>${inv.station}</strong> - Invested: $${inv.amount} on ${inv.date}`;
+                list.appendChild(li);
+            });
+        }
+
+        // Sayfa yüklendiğinde yatırımları getir
+        window.onload = loadInvestments;
+    </script>
+</body>
+</html>

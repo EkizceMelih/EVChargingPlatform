@@ -1,0 +1,164 @@
+﻿@{
+    ViewData["Title"] = "EV Charging Platform - Home";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background: #28a745;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .profile-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+            .profile-button:hover {
+                background: #0056b3;
+            }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .station-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .station-item {
+            background: #e9ecef;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .invest-button {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+            .invest-button:hover {
+                background: #0056b3;
+            }
+
+        .map-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .investment-form {
+            margin-top: 15px;
+        }
+
+            .investment-form input {
+                padding: 5px;
+                margin-right: 5px;
+                width: 100px;
+            }
+
+        .chart-container {
+            width: 100%;
+            height: 250px;
+            margin-top: 15px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        function redirectToInvest(stationId) {
+            window.location.href = `/Invest/Index?stationId=` + stationId;
+        }
+
+        function redirectToProfile() {
+            window.location.href = `/User/Index`;
+        }
+
+        function initMap(mapId, lat, lng) {
+            var map = L.map(mapId).setView([lat, lng], 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            L.marker([lat, lng]).addTo(map)
+                .bindPopup('Açılması Planlanan Enerji İstasyonları')
+                .openPopup();
+        }
+
+        window.onload = function () {
+            initMap('map1', 38.423733, 27.142826); // Izmir
+            initMap('map2', 40.2, 29.04); // Bursa
+            initMap('map3', 41.0082, 28.9784); // Istanbul
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        Elektrikli Şarj İstasyonu Yatırım Platformuna Hoş Geldiniz!
+        <button class="profile-button" onclick="redirectToProfile()">Profile</button>
+    </div>
+    <div class="container">
+        <h2>Açılması Planlanan Enerji İstasyonları</h2>
+        <ul class="station-list">
+            <li class="station-item">
+                <span>İstasyon Adı: Yeşil Enerji İzmir</span>
+                <span>Lokasyon: Konak/İzmir</span>
+                <button class="invest-button" onclick="redirectToInvest(1)">Yatırım Yap</button>
+                <div id="map1" class="map-container"></div>
+            </li>
+            <li class="station-item">
+                <span>İstasyon Adı: Elektrik16</span>
+                <span>Lokasyon: Osmangazi/Bursa</span>
+                <button class="invest-button" onclick="redirectToInvest(2)">Yatırım Yap</button>
+                <div id="map2" class="map-container"></div>
+            </li>
+            <li class="station-item">
+                <span>İstasyon Adı: Levent Elektrik</span>
+                <span>Lokasyon: Levent/İstanbul</span>
+                <button class="invest-button" onclick="redirectToInvest(3)">Yatırım Yap</button>
+                <div id="map3" class="map-container"></div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
